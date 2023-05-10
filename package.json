@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
-    "express-fileupload": "^1.4.0"
+    "express-fileupload": "^1.4.0",
+    "fs": "^0.0.1-security",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
