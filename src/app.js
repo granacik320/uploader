@@ -1,6 +1,7 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const fs = require("fs");
 
 const filesPayloadExists = require('./middleware/filesPayloadExists');
 const fileExtLimiter = require('./middleware/fileExtLimiter');
@@ -14,6 +15,12 @@ app.use(express.static(path.join(__dirname, '../', 'public'), { extensions: ['ht
 app.use('/public', express.static(path.join(__dirname, '../', 'public')));
 app.use('/CSS', express.static(path.join(__dirname, '../', 'public/CSS')));
 
+app.get("/images", (req, res) => {
+    res.sendFile(path.join(__dirname, "files", "all.jpg"));
+    fs.readdirSync(path.join(__dirname, "files")).forEach(file => {
+        console.log(file);
+    });
+});
 app.post('/upload',
     fileUpload({ createParentPath: true }),
     filesPayloadExists,
