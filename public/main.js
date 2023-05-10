@@ -9,7 +9,7 @@ const sendFiles = async () => {
         formData.append(myFiles.item(key).name, myFiles.item(key))
     })
 
-    const response = await fetch('http://localhost:3500/upload', {
+    const response = await fetch(`${window.location.origin}/upload`, {
         method: 'POST',
         body: formData
     })
