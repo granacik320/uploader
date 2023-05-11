@@ -20,30 +20,21 @@ app.use('/images', express.static(path.join(__dirname, 'files')))
 
 app.get("/images", async (req, res) => {
     let images = getImagesFromDir(path.join(__dirname, 'files'));
-    res.render('images', { title: 'ALL IMAGES', images: images })
+    res.render('images', { title: 'Images', images: images })
 });
 
 function getImagesFromDir(dirPath) {
-
-    // All iamges holder, defalut value is empty
-    let allImages = [];
-
-    // Iterator over the directory
+    let images = [];
     let files = fs.readdirSync(dirPath);
 
-    // Iterator over the files and push jpg and png images to allImages array.
-    for (file of files) {
-        let fileLocation = path.join(dirPath, file);
-        var stat = fs.statSync(fileLocation);
-        if (stat && stat.isDirectory()) {
-            getImagesFromDir(fileLocation); // process sub directories
-        } else if (stat && stat.isFile() && ['.jpg', '.png'].indexOf(path.extname(fileLocation)) != -1) {
-            allImages.push(file); // push all .jpf and .png files to all images 
+    files.forEach((e) => {
+        let dirFile = path.join(dirPath, e);
+        const stat = fs.statSync(dirFile);
+        if (stat && stat.isFile() && ['.jpg', '.png', '.jpeg'].indexOf(path.extname(dirFile)) != -1) {
+            images.push(e);
         }
-    }
-
-    // return all images in array formate
-    return allImages;
+    })
+    return images;
 }
 
 app.post('/upload',
